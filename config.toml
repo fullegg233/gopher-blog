@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313"
+baseURL = "https://fullegg233.github.io/gopher-blog/"
 languageCode = "zh-CN"
 title = "诗芮爸爸的博客"
 theme = "maupassant"
