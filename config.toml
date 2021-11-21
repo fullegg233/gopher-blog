@@ -1,0 +1,40 @@
+baseURL = "http://localhost:1313"
+languageCode = "zh-CN"
+title = "诗芮爸爸的博客"
+theme = "maupassant"
+
+[author]
+  name = "诗芮爸爸"
+
+[params]
+  author = "诗芮爸爸"
+  subtitle = "专注于Go语言(golang)、移动互联网、项目管理、软件架构"
+  keywords = "golang,go语言,go语言笔记,诗芮爸爸,PHP,博客,项目管理,软件架构,公众号,小程序"
+  description = "专注于IT互联网，包括但不限于Go语言(golang)、PHP、项目管理、软件架构等"
+
+## 保持分类的原始名字（false会做转小写处理）
+  preserveTaxonomyNames = true
+## 是否禁止URL Path转小写
+  disablePathToLower = true
+
+[menu]
+  [[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 2
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 3
+
+## 友情链接，可以多个
+[[params.links]]
+  title = "Golang标准库文档"
+  name = "Golang标准库文档"
+  url = "https://studygolang.com/pkgdoc"
+[[params.links]]
+  title = "酷 壳 – COOLSHELL"
+  name = "酷 壳 – COOLSHELL"
+  url = "https://coolshell.cn/"
