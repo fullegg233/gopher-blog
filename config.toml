@@ -38,3 +38,13 @@ theme = "maupassant"
   title = "酷 壳 – COOLSHELL"
   name = "酷 壳 – COOLSHELL"
   url = "https://coolshell.cn/"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    noClasses = false
+    tabWidth = 2
+    lineNos = false
+  [markup.tableOfContents]
+    ordered = false
+    startLevel = 1
