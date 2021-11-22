@@ -6,7 +6,72 @@
     <description>Recent content in Posts on 诗芮爸爸的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 22 Nov 2021 11:44:00 +0800</lastBuildDate><atom:link href="https://fullegg233.github.io/gopher-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Nov 2021 15:52:00 +0800</lastBuildDate><atom:link href="https://fullegg233.github.io/gopher-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>14并发</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/14%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Mon, 22 Nov 2021 15:52:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/14%E5%B9%B6%E5%8F%91/</guid>
+      <description>并发是编程里面一个非常重要的概念，Go语言在语言层面天生支持并发，这也是Go语言流行的一个很重要的原因。</description>
+    </item>
+    
+    <item>
+      <title>13反射</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/13%E5%8F%8D%E5%B0%84/</link>
+      <pubDate>Mon, 22 Nov 2021 15:48:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/13%E5%8F%8D%E5%B0%84/</guid>
+      <description>本文介绍了Go语言反射的意义和基本使用。</description>
+    </item>
+    
+    <item>
+      <title>12接口</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/12%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Mon, 22 Nov 2021 15:42:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/12%E6%8E%A5%E5%8F%A3/</guid>
+      <description>接口（interface）定义了一个对象的行为规范，只定义规范不实现，由具体的对象来实现规范的细节。</description>
+    </item>
+    
+    <item>
+      <title>11包（package）</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/11%E5%8C%85package/</link>
+      <pubDate>Mon, 22 Nov 2021 15:40:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/11%E5%8C%85package/</guid>
+      <description>在工程化的Go语言开发项目中，Go语言的源码复用是建立在包（package）基础之上的。本文介绍了Go语言中如何定义包、如何导出包的内容及如何导入其他包。</description>
+    </item>
+    
+    <item>
+      <title>10结构体</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/10%E7%BB%93%E6%9E%84%E4%BD%93/</link>
+      <pubDate>Mon, 22 Nov 2021 15:33:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/10%E7%BB%93%E6%9E%84%E4%BD%93/</guid>
+      <description>Go语言中没有“类”的概念，也不支持“类”的继承等面向对象的概念。Go语言中通过结构体的内嵌再配合接口比面向对象具有更高的扩展性和灵活性。</description>
+    </item>
+    
+    <item>
+      <title>09指针</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/09%E6%8C%87%E9%92%88/</link>
+      <pubDate>Mon, 22 Nov 2021 15:28:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/09%E6%8C%87%E9%92%88/</guid>
+      <description>区别于C/C++中的指针，Go语言中的指针不能进行偏移和运算，是安全指针。
+要搞明白Go语言中的指针需要先知道3个概念：指针地址、指针类型和指针取值。</description>
+    </item>
+    
+    <item>
+      <title>08函数</title>
+      <link>https://fullegg233.github.io/gopher-blog/post/08%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Mon, 22 Nov 2021 15:12:00 +0800</pubDate>
+      
+      <guid>https://fullegg233.github.io/gopher-blog/post/08%E5%87%BD%E6%95%B0/</guid>
+      <description>函数是组织好的、可重复使用的、用于执行指定任务的代码块。
+Go语言中支持函数、匿名函数和闭包，并且函数在Go语言中属于“一等公民”。</description>
+    </item>
+    
     <item>
       <title>07map</title>
       <link>https://fullegg233.github.io/gopher-blog/post/07map/</link>
