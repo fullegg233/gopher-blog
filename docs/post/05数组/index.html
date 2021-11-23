@@ -207,79 +207,179 @@
         
         <div class="post-content">
             <h1 id="1数组定义">1、数组定义：</h1>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">var 数组变量名 <span class="o">[</span>元素数量<span class="o">]</span>T
-</code></pre></div><p>比如：<code>var a [5]int</code>， 数组的长度必须是常量（也可以用省略号推导出长度），并且长度是数组类型的一部分。一旦定义，长度不能变。 <code>[5]int</code>和<code>[10]int</code>是不同的类型。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">var 数组变量名 <span style="color:#ff79c6">[</span>元素数量<span style="color:#ff79c6">]</span>T
+</code></pre></td></tr></table>
+</div>
+</div><p>比如：<code>var a [5]int</code>， 数组的长度必须是常量（也可以用省略号推导出长度），并且长度是数组类型的一部分。一旦定义，长度不能变。 <code>[5]int</code>和<code>[10]int</code>是不同的类型。</p>
 <p>数组可以通过下标进行访问，下标是从<code>0</code>开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
 <h1 id="2数组的初始化">2、数组的初始化</h1>
 <h2 id="21方法一">2.1、方法一</h2>
 <p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">testArray</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span>                        <span class="c1">//数组会初始化为int类型的零值
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">numArray</span> <span class="p">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>                 <span class="c1">//使用指定的初始值完成初始化
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">cityArray</span> <span class="p">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;北京&#34;</span><span class="p">,</span> <span class="s">&#34;上海&#34;</span><span class="p">,</span> <span class="s">&#34;深圳&#34;</span><span class="p">}</span> <span class="c1">//使用指定的初始值完成初始化
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">testArray</span><span class="p">)</span>                      <span class="c1">//[0 0 0]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">numArray</span><span class="p">)</span>                       <span class="c1">//[1 2 0]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">cityArray</span><span class="p">)</span>                      <span class="c1">//[北京 上海 深圳]
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h2 id="22方法二">2.2、方法二</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> testArray [<span style="color:#bd93f9">3</span>]<span style="color:#8be9fd">int</span>                        <span style="color:#6272a4">//数组会初始化为int类型的零值
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> numArray = [<span style="color:#bd93f9">3</span>]<span style="color:#8be9fd">int</span>{<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>}                 <span style="color:#6272a4">//使用指定的初始值完成初始化
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> cityArray = [<span style="color:#bd93f9">3</span>]<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;北京&#34;</span>, <span style="color:#f1fa8c">&#34;上海&#34;</span>, <span style="color:#f1fa8c">&#34;深圳&#34;</span>} <span style="color:#6272a4">//使用指定的初始值完成初始化
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(testArray)                      <span style="color:#6272a4">//[0 0 0]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(numArray)                       <span style="color:#6272a4">//[1 2 0]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(cityArray)                      <span style="color:#6272a4">//[北京 上海 深圳]
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="22方法二">2.2、方法二</h2>
 <p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">testArray</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span>
-    <span class="kd">var</span> <span class="nx">numArray</span> <span class="p">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
-    <span class="kd">var</span> <span class="nx">cityArray</span> <span class="p">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;北京&#34;</span><span class="p">,</span> <span class="s">&#34;上海&#34;</span><span class="p">,</span> <span class="s">&#34;深圳&#34;</span><span class="p">}</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">testArray</span><span class="p">)</span>                          <span class="c1">//[0 0 0]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">numArray</span><span class="p">)</span>                           <span class="c1">//[1 2]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type of numArray:%T\n&#34;</span><span class="p">,</span> <span class="nx">numArray</span><span class="p">)</span>   <span class="c1">//type of numArray:[2]int
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">cityArray</span><span class="p">)</span>                          <span class="c1">//[北京 上海 深圳]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type of cityArray:%T\n&#34;</span><span class="p">,</span> <span class="nx">cityArray</span><span class="p">)</span> <span class="c1">//type of cityArray:[3]string
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h2 id="23方法三">2.3、方法三</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> testArray [<span style="color:#bd93f9">3</span>]<span style="color:#8be9fd">int</span>
+    <span style="color:#8be9fd;font-style:italic">var</span> numArray = [<span style="color:#ff79c6">...</span>]<span style="color:#8be9fd">int</span>{<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>}
+    <span style="color:#8be9fd;font-style:italic">var</span> cityArray = [<span style="color:#ff79c6">...</span>]<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;北京&#34;</span>, <span style="color:#f1fa8c">&#34;上海&#34;</span>, <span style="color:#f1fa8c">&#34;深圳&#34;</span>}
+    fmt.<span style="color:#50fa7b">Println</span>(testArray)                          <span style="color:#6272a4">//[0 0 0]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(numArray)                           <span style="color:#6272a4">//[1 2]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type of numArray:%T\n&#34;</span>, numArray)   <span style="color:#6272a4">//type of numArray:[2]int
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(cityArray)                          <span style="color:#6272a4">//[北京 上海 深圳]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type of cityArray:%T\n&#34;</span>, cityArray) <span style="color:#6272a4">//type of cityArray:[3]string
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="23方法三">2.3、方法三</h2>
 <p>我们还可以使用指定索引值的方式来初始化数组。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>                  <span class="c1">// [0 1 0 5]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type of a:%T\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1">//type of a:[4]int
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h1 id="3数组遍历">3、数组遍历</h1>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="p">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;北京&#34;</span><span class="p">,</span> <span class="s">&#34;上海&#34;</span><span class="p">,</span> <span class="s">&#34;深圳&#34;</span><span class="p">}</span>
-    <span class="c1">// 方法1：for循环遍历
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
-    <span class="p">}</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    a <span style="color:#ff79c6">:=</span> [<span style="color:#ff79c6">...</span>]<span style="color:#8be9fd">int</span>{<span style="color:#bd93f9">1</span>: <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">3</span>: <span style="color:#bd93f9">5</span>}
+    fmt.<span style="color:#50fa7b">Println</span>(a)                  <span style="color:#6272a4">// [0 1 0 5]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type of a:%T\n&#34;</span>, a) <span style="color:#6272a4">//type of a:[4]int
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="3数组遍历">3、数组遍历</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> a = [<span style="color:#ff79c6">...</span>]<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;北京&#34;</span>, <span style="color:#f1fa8c">&#34;上海&#34;</span>, <span style="color:#f1fa8c">&#34;深圳&#34;</span>}
+    <span style="color:#6272a4">// 方法1：for循环遍历
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#8be9fd;font-style:italic">len</span>(a); i<span style="color:#ff79c6">++</span> {
+        fmt.<span style="color:#50fa7b">Println</span>(a[i])
+    }
 
-    <span class="c1">// 方法2：for range遍历
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">a</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="4多维数组">4、多维数组</h1>
+    <span style="color:#6272a4">// 方法2：for range遍历
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> index, value <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> a {
+        fmt.<span style="color:#50fa7b">Println</span>(index, value)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="4多维数组">4、多维数组</h1>
 <p>Go语言是支持多维数组的，我们这里以二维数组为例（数组中又嵌套数组）。</p>
 <h2 id="41二维数组的定义">4.1、二维数组的定义</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-        <span class="p">{</span><span class="s">&#34;北京&#34;</span><span class="p">,</span> <span class="s">&#34;上海&#34;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s">&#34;广州&#34;</span><span class="p">,</span> <span class="s">&#34;深圳&#34;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s">&#34;成都&#34;</span><span class="p">,</span> <span class="s">&#34;重庆&#34;</span><span class="p">},</span>
-    <span class="p">}</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//[[北京 上海] [广州 深圳] [成都 重庆]]
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="c1">//支持索引取值:重庆
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h2 id="42二维数组的遍历">4.2、二维数组的遍历</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-        <span class="p">{</span><span class="s">&#34;北京&#34;</span><span class="p">,</span> <span class="s">&#34;上海&#34;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s">&#34;广州&#34;</span><span class="p">,</span> <span class="s">&#34;深圳&#34;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s">&#34;成都&#34;</span><span class="p">,</span> <span class="s">&#34;重庆&#34;</span><span class="p">},</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v1</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">a</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v2</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">v1</span> <span class="p">{</span>
-            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s\t&#34;</span><span class="p">,</span> <span class="nx">v2</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="5数组是值类型">5、数组是值类型</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    a <span style="color:#ff79c6">:=</span> [<span style="color:#bd93f9">3</span>][<span style="color:#bd93f9">2</span>]<span style="color:#8be9fd">string</span>{
+        {<span style="color:#f1fa8c">&#34;北京&#34;</span>, <span style="color:#f1fa8c">&#34;上海&#34;</span>},
+        {<span style="color:#f1fa8c">&#34;广州&#34;</span>, <span style="color:#f1fa8c">&#34;深圳&#34;</span>},
+        {<span style="color:#f1fa8c">&#34;成都&#34;</span>, <span style="color:#f1fa8c">&#34;重庆&#34;</span>},
+    }
+    fmt.<span style="color:#50fa7b">Println</span>(a) <span style="color:#6272a4">//[[北京 上海] [广州 深圳] [成都 重庆]]
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(a[<span style="color:#bd93f9">2</span>][<span style="color:#bd93f9">1</span>]) <span style="color:#6272a4">//支持索引取值:重庆
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="42二维数组的遍历">4.2、二维数组的遍历</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    a <span style="color:#ff79c6">:=</span> [<span style="color:#bd93f9">3</span>][<span style="color:#bd93f9">2</span>]<span style="color:#8be9fd">string</span>{
+        {<span style="color:#f1fa8c">&#34;北京&#34;</span>, <span style="color:#f1fa8c">&#34;上海&#34;</span>},
+        {<span style="color:#f1fa8c">&#34;广州&#34;</span>, <span style="color:#f1fa8c">&#34;深圳&#34;</span>},
+        {<span style="color:#f1fa8c">&#34;成都&#34;</span>, <span style="color:#f1fa8c">&#34;重庆&#34;</span>},
+    }
+    <span style="color:#ff79c6">for</span> _, v1 <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> a {
+        <span style="color:#ff79c6">for</span> _, v2 <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> v1 {
+            fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s\t&#34;</span>, v2)
+        }
+        fmt.<span style="color:#50fa7b">Println</span>()
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="5数组是值类型">5、数组是值类型</h1>
 <p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
 <p><strong>注意：</strong></p>
 <ol>

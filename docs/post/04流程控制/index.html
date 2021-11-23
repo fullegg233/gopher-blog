@@ -214,35 +214,81 @@
             <h1 id="1if-else">1、if else</h1>
 <h2 id="11if条件判断基本写法">1.1、if条件判断基本写法</h2>
 <p>Go语言中<code>if</code>条件判断的格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">表达式1</span> <span class="p">{</span>
-    <span class="nx">分支1</span>
-<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">表达式2</span> <span class="p">{</span>
-    <span class="nx">分支2</span>
-<span class="p">}</span> <span class="k">else</span><span class="p">{</span>
-    <span class="nx">分支3</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="12if条件判断特殊写法">1.2、if条件判断特殊写法</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">if</span> 表达式1 {
+    分支1
+} <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> 表达式2 {
+    分支2
+} <span style="color:#ff79c6">else</span>{
+    分支3
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="12if条件判断特殊写法">1.2、if条件判断特殊写法</h2>
 <p>if条件判断还有一种特殊的写法，可以在 if 表达式之前添加一个执行语句，再根据变量值进行判断，举个例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ifDemo2</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="nx">score</span> <span class="o">:=</span> <span class="mi">65</span><span class="p">;</span> <span class="nx">score</span> <span class="o">&gt;=</span> <span class="mi">90</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;A&#34;</span><span class="p">)</span>
-     <span class="k">else</span> <span class="k">if</span> <span class="nx">score</span> <span class="p">&gt;</span> <span class="mi">75</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;B&#34;</span><span class="p">)</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;C&#34;</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="2for循环">2、for循环</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ifDemo2</span>() {
+    <span style="color:#ff79c6">if</span> score <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">65</span>; score <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">90</span> {
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>)
+     <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> score &gt; <span style="color:#bd93f9">75</span> {
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>)
+    } <span style="color:#ff79c6">else</span> {
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="2for循环">2、for循环</h1>
 <p>Go 语言中的所有循环类型均可以使用<code>for</code>关键字来完成。</p>
 <p>or循环的基本格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> 初始语句<span class="p">;</span>条件表达式<span class="p">;</span>结束语句<span class="o">{</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ff79c6">for</span> 初始语句;条件表达式;结束语句<span style="color:#ff79c6">{</span>
     循环体语句
-<span class="o">}</span>
-</code></pre></div><h3 id="无限循环">无限循环</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="p">{</span>
-    <span class="nx">循环体语句</span>
-<span class="p">}</span>
-</code></pre></div><p>for循环可以通过<code>break</code>、<code>goto</code>、<code>return</code>、<code>panic</code>语句强制退出循环。</p>
+<span style="color:#ff79c6">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="无限循环">无限循环</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">for</span> {
+    循环体语句
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>for循环可以通过<code>break</code>、<code>goto</code>、<code>return</code>、<code>panic</code>语句强制退出循环。</p>
 <h1 id="3for-range">3、for range</h1>
 <p>Go语言中可以使用<code>for range</code>遍历数组、切片、字符串、map 及通道（channel）。 通过<code>for range</code>遍历的返回值有以下规律：</p>
 <ol>
@@ -252,60 +298,122 @@
 </ol>
 <h1 id="4switch-case">4、switch case</h1>
 <p>使用<code>switch</code>语句可方便地对大量的值进行条件判断。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">switchDemo1</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">finger</span> <span class="o">:=</span> <span class="mi">3</span>
-    <span class="k">switch</span> <span class="nx">finger</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;大拇指&#34;</span><span class="p">)</span>
-    <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;食指&#34;</span><span class="p">)</span>
-    <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;中指&#34;</span><span class="p">)</span>
-    <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;无名指&#34;</span><span class="p">)</span>
-    <span class="k">case</span> <span class="mi">5</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;小拇指&#34;</span><span class="p">)</span>
-    <span class="k">default</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;无效的输入！&#34;</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="5goto跳转到指定标签">5、goto(跳转到指定标签)</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">switchDemo1</span>() {
+    finger <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">3</span>
+    <span style="color:#ff79c6">switch</span> finger {
+    <span style="color:#ff79c6">case</span> <span style="color:#bd93f9">1</span>:
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;大拇指&#34;</span>)
+    <span style="color:#ff79c6">case</span> <span style="color:#bd93f9">2</span>:
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;食指&#34;</span>)
+    <span style="color:#ff79c6">case</span> <span style="color:#bd93f9">3</span>:
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;中指&#34;</span>)
+    <span style="color:#ff79c6">case</span> <span style="color:#bd93f9">4</span>:
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;无名指&#34;</span>)
+    <span style="color:#ff79c6">case</span> <span style="color:#bd93f9">5</span>:
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;小拇指&#34;</span>)
+    <span style="color:#ff79c6">default</span>:
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;无效的输入！&#34;</span>)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="5goto跳转到指定标签">5、goto(跳转到指定标签)</h1>
 <p><code>goto</code>语句通过标签进行代码间的无条件跳转。<code>goto</code>语句可以在快速跳出循环、避免重复退出上有一定的帮助。Go语言中使用<code>goto</code>语句能简化一些代码的实现过程。</p>
 <p>使用<code>goto</code>语句能简化代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">gotoDemo2</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="nx">j</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
-                <span class="c1">// 设置退出标签
-</span><span class="c1"></span>                <span class="k">goto</span> <span class="nx">breakTag</span>
-            <span class="p">}</span>
-            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%v-%v\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span>
-    <span class="c1">// 标签
-</span><span class="c1"></span><span class="nx">breakTag</span><span class="p">:</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;结束for循环&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="6break跳出循环">6、break(跳出循环)</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">gotoDemo2</span>() {
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#bd93f9">10</span>; i<span style="color:#ff79c6">++</span> {
+        <span style="color:#ff79c6">for</span> j <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; j &lt; <span style="color:#bd93f9">10</span>; j<span style="color:#ff79c6">++</span> {
+            <span style="color:#ff79c6">if</span> j <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span> {
+                <span style="color:#6272a4">// 设置退出标签
+</span><span style="color:#6272a4"></span>                <span style="color:#ff79c6">goto</span> breakTag
+            }
+            fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v-%v\n&#34;</span>, i, j)
+        }
+    }
+    <span style="color:#ff79c6">return</span>
+    <span style="color:#6272a4">// 标签
+</span><span style="color:#6272a4"></span>breakTag:
+    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;结束for循环&#34;</span>)
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="6break跳出循环">6、break(跳出循环)</h1>
 <p><code>break</code>语句可以结束<code>for</code>、<code>switch</code>和<code>select</code>的代码块。</p>
 <p><code>break</code>语句还可以在语句后面添加标签，表示退出某个标签对应的代码块，标签要求必须定义在对应的<code>for</code>、<code>switch</code>和 <code>select</code>的代码块上。</p>
 <h1 id="7continue继续下次循环">7、continue(继续下次循环)</h1>
 <p><code>continue</code>语句可以结束当前循环，开始下一次的循环迭代过程，仅限在<code>for</code>循环内使用。</p>
 <p>在 <code>continue</code>语句后添加标签时，表示开始标签对应的循环。例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">continueDemo</span><span class="p">()</span> <span class="p">{</span>
-<span class="nx">forloop1</span><span class="p">:</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="c1">// forloop2:
-</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
-                <span class="k">continue</span> <span class="nx">forloop1</span>
-            <span class="p">}</span>
-            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%v-%v\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="8练习题">8、练习题</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">continueDemo</span>() {
+forloop1:
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#bd93f9">5</span>; i<span style="color:#ff79c6">++</span> {
+        <span style="color:#6272a4">// forloop2:
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">for</span> j <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; j &lt; <span style="color:#bd93f9">5</span>; j<span style="color:#ff79c6">++</span> {
+            <span style="color:#ff79c6">if</span> i <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">&amp;&amp;</span> j <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span> {
+                <span style="color:#ff79c6">continue</span> forloop1
+            }
+            fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v-%v\n&#34;</span>, i, j)
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="8练习题">8、练习题</h1>
 <p>编写代码打印9*9乘法表。</p>
 
         </div>

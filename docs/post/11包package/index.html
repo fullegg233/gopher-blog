@@ -212,8 +212,15 @@
 <p><code>包（package）</code>是多个Go源码的集合，是一种高级的代码复用方案，Go语言为我们提供了很多内置包，如<code>fmt</code>、<code>os</code>、<code>io</code>等。</p>
 <h1 id="2定义包">2、定义包</h1>
 <p>我们还可以根据自己的需要创建自己的包。一个包可以简单理解为一个存放<code>.go</code>文件的文件夹。 该文件夹下面的所有go文件都要在代码的第一行添加如下代码，声明该文件归属的包。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">包名</span>
-</code></pre></div><p>注意事项：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> 包名
+</code></pre></td></tr></table>
+</div>
+</div><p>注意事项：</p>
 <ul>
 <li>一个文件夹下面直接包含的文件只能归属一个<code>package</code>，同样一个<code>package</code>的文件不能在多个文件夹下。</li>
 <li>包名可以不和文件夹的名字一样，包名不能包含 <code>-</code> 符号。</li>
@@ -222,44 +229,96 @@
 <h1 id="3可见性">3、可见性</h1>
 <p>如果想在一个包中引用另外一个包里的标识符（如变量、常量、类型、函数等）时，该标识符必须是对外可见的（public）。在Go语言中只需要将标识符的首字母大写就可以让标识符对外可见了。</p>
 <p>举个例子， 我们定义一个包名为<code>pkg2</code>的包，代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">pkg2</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> pkg2
 
-<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+<span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
 
-<span class="c1">// 包变量可见性
-</span><span class="c1"></span>
-<span class="kd">var</span> <span class="nx">a</span> <span class="p">=</span> <span class="mi">100</span> <span class="c1">// 首字母小写，外部包不可见，只能在当前包内使用
-</span><span class="c1"></span>
-<span class="c1">// 首字母大写外部包可见，可在其他包中使用
-</span><span class="c1"></span><span class="kd">const</span> <span class="nx">Mode</span> <span class="p">=</span> <span class="mi">1</span>
+<span style="color:#6272a4">// 包变量可见性
+</span><span style="color:#6272a4"></span>
+<span style="color:#8be9fd;font-style:italic">var</span> a = <span style="color:#bd93f9">100</span> <span style="color:#6272a4">// 首字母小写，外部包不可见，只能在当前包内使用
+</span><span style="color:#6272a4"></span>
+<span style="color:#6272a4">// 首字母大写外部包可见，可在其他包中使用
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">const</span> Mode = <span style="color:#bd93f9">1</span>
 
-<span class="kd">type</span> <span class="nx">person</span> <span class="kd">struct</span> <span class="p">{</span> <span class="c1">// 首字母小写，外部包不可见，只能在当前包内使用
-</span><span class="c1"></span>    <span class="nx">name</span> <span class="kt">string</span>
-<span class="p">}</span>
+<span style="color:#8be9fd;font-style:italic">type</span> person <span style="color:#8be9fd;font-style:italic">struct</span> { <span style="color:#6272a4">// 首字母小写，外部包不可见，只能在当前包内使用
+</span><span style="color:#6272a4"></span>    name <span style="color:#8be9fd">string</span>
+}
 
-<span class="c1">// 首字母大写，外部包可见，可在其他包中使用
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">Add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span>
-<span class="p">}</span>
+<span style="color:#6272a4">// 首字母大写，外部包可见，可在其他包中使用
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">Add</span>(x, y <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">int</span> {
+    <span style="color:#ff79c6">return</span> x <span style="color:#ff79c6">+</span> y
+}
 
-<span class="kd">func</span> <span class="nf">age</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 首字母小写，外部包不可见，只能在当前包内使用
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">Age</span> <span class="p">=</span> <span class="mi">18</span> <span class="c1">// 函数局部变量，外部包不可见，只能在当前函数内使用
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">Age</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>结构体中的字段名和接口中的方法名如果首字母都是大写，外部包可以访问这些字段和方法。例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Student</span> <span class="kd">struct</span> <span class="p">{</span>
-    <span class="nx">Name</span>  <span class="kt">string</span> <span class="c1">//可在包外访问的方法
-</span><span class="c1"></span>    <span class="nx">class</span> <span class="kt">string</span> <span class="c1">//仅限包内访问的字段
-</span><span class="c1"></span><span class="p">}</span>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">age</span>() { <span style="color:#6272a4">// 首字母小写，外部包不可见，只能在当前包内使用
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> Age = <span style="color:#bd93f9">18</span> <span style="color:#6272a4">// 函数局部变量，外部包不可见，只能在当前函数内使用
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(Age)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>结构体中的字段名和接口中的方法名如果首字母都是大写，外部包可以访问这些字段和方法。例如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">type</span> Student <span style="color:#8be9fd;font-style:italic">struct</span> {
+    Name  <span style="color:#8be9fd">string</span> <span style="color:#6272a4">//可在包外访问的方法
+</span><span style="color:#6272a4"></span>    class <span style="color:#8be9fd">string</span> <span style="color:#6272a4">//仅限包内访问的字段
+</span><span style="color:#6272a4"></span>}
 
-<span class="kd">type</span> <span class="nx">Payer</span> <span class="kd">interface</span> <span class="p">{</span>
-    <span class="nf">init</span><span class="p">()</span> <span class="c1">//仅限包内访问的方法
-</span><span class="c1"></span>    <span class="nf">Pay</span><span class="p">()</span>  <span class="c1">//可在包外访问的方法
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h1 id="4包的导入">4、包的导入</h1>
+<span style="color:#8be9fd;font-style:italic">type</span> Payer <span style="color:#8be9fd;font-style:italic">interface</span> {
+    <span style="color:#50fa7b">init</span>() <span style="color:#6272a4">//仅限包内访问的方法
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">Pay</span>()  <span style="color:#6272a4">//可在包外访问的方法
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="4包的导入">4、包的导入</h1>
 <p>要在代码中引用其他包的内容，需要使用<code>import</code>关键字导入使用的包。具体语法如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;包的路径&#34;</span>
-</code></pre></div><p>注意事项：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;包的路径&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意事项：</p>
 <ul>
 <li>import导入语句通常放在文件开头包声明语句的下面。</li>
 <li>导入的包名需要使用双引号包裹起来。</li>
@@ -268,39 +327,99 @@
 </ul>
 <h2 id="41单行导入">4.1、单行导入</h2>
 <p>单行导入的格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;包1&#34;</span>
-<span class="kn">import</span> <span class="s">&#34;包2&#34;</span>
-</code></pre></div><h2 id="42多行导入">4.2、多行导入</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;包1&#34;</span>
+<span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;包2&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="42多行导入">4.2、多行导入</h2>
 <p>多行导入的格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&#34;包1&#34;</span>
-    <span class="s">&#34;包2&#34;</span>
-<span class="p">)</span>
-</code></pre></div><h1 id="5自定义包名">5、自定义包名</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> (
+    <span style="color:#f1fa8c">&#34;包1&#34;</span>
+    <span style="color:#f1fa8c">&#34;包2&#34;</span>
+)
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="5自定义包名">5、自定义包名</h1>
 <p>在导入包名的时候，我们还可以为导入的包设置别名。通常用于导入的包名太长或者导入的包名冲突的情况。具体语法格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="nx">别名</span> <span class="s">&#34;包的路径&#34;</span>
-</code></pre></div><p>单行导入方式定义别名：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-<span class="kn">import</span> <span class="nx">m</span> <span class="s">&#34;github.com/Q1mi/studygo/pkg_test&#34;</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> 别名 <span style="color:#f1fa8c">&#34;包的路径&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>单行导入方式定义别名：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+<span style="color:#ff79c6">import</span> m <span style="color:#f1fa8c">&#34;github.com/Q1mi/studygo/pkg_test&#34;</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">Mode</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>多行导入方式定义别名：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&#34;fmt&#34;</span>
-    <span class="nx">m</span> <span class="s">&#34;github.com/Q1mi/studygo/pkg_test&#34;</span>
- <span class="p">)</span>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    fmt.<span style="color:#50fa7b">Println</span>(m.<span style="color:#50fa7b">Add</span>(<span style="color:#bd93f9">100</span>, <span style="color:#bd93f9">200</span>))
+    fmt.<span style="color:#50fa7b">Println</span>(m.Mode)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>多行导入方式定义别名：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> (
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    m <span style="color:#f1fa8c">&#34;github.com/Q1mi/studygo/pkg_test&#34;</span>
+ )
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">Mode</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="6匿名导入包">6、匿名导入包</h1>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    fmt.<span style="color:#50fa7b">Println</span>(m.<span style="color:#50fa7b">Add</span>(<span style="color:#bd93f9">100</span>, <span style="color:#bd93f9">200</span>))
+    fmt.<span style="color:#50fa7b">Println</span>(m.Mode)
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="6匿名导入包">6、匿名导入包</h1>
 <p>如果只希望导入包，而不使用包内部的数据时，可以使用匿名导入包。具体的格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="nx">_</span> <span class="s">&#34;包的路径&#34;</span>
-</code></pre></div><p>匿名导入的包与其他方式导入的包一样都会被编译到可执行文件中。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">import</span> _ <span style="color:#f1fa8c">&#34;包的路径&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>匿名导入的包与其他方式导入的包一样都会被编译到可执行文件中。</p>
 <h1 id="7init初始化函数">7、init()初始化函数</h1>
 <h2 id="71init函数介绍">7.1、init()函数介绍</h2>
 <p>在Go语言程序执行时导入包语句会自动触发包内部<code>init()</code>函数的调用。需要注意的是： <code>init()</code>函数没有参数也没有返回值。 <code>init()</code>函数在程序运行时自动被调用执行，不能在代码中主动调用它。</p>

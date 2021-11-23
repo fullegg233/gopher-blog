@@ -238,93 +238,193 @@
 <p>在Go语言的反射机制中，任何接口值都由是<code>一个具体类型</code>和<code>具体类型的值</code>两部分组成的(我们在上一篇接口的博客中有介绍相关概念)。 在Go语言中反射的相关功能由内置的reflect包提供，任意接口值在反射中都可以理解为由<code>reflect.Type</code>和<code>reflect.Value</code>两部分组成，并且reflect包提供了<code>reflect.TypeOf</code>和<code>reflect.ValueOf</code>两个函数来获取任意对象的Value和Type。</p>
 <h2 id="31typeof">3.1、TypeOf</h2>
 <p>在Go语言中，使用<code>reflect.TypeOf()</code>函数可以获得任意值的类型对象（reflect.Type），程序通过类型对象可以访问任意值的类型信息。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> main
 
-<span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&#34;fmt&#34;</span>
-    <span class="s">&#34;reflect&#34;</span>
-<span class="p">)</span>
+<span style="color:#ff79c6">import</span> (
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;reflect&#34;</span>
+)
 
-<span class="kd">func</span> <span class="nf">reflectType</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type:%v\n&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="kt">float32</span> <span class="p">=</span> <span class="mf">3.14</span>
-    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// type:float32
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">b</span> <span class="kt">int64</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">// type:int64
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h3 id="type-name和type-kind">type name和type kind</h3>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">reflectType</span>(x <span style="color:#8be9fd;font-style:italic">interface</span>{}) {
+    v <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">TypeOf</span>(x)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type:%v\n&#34;</span>, v)
+}
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> a <span style="color:#8be9fd">float32</span> = <span style="color:#bd93f9">3.14</span>
+    <span style="color:#50fa7b">reflectType</span>(a) <span style="color:#6272a4">// type:float32
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> b <span style="color:#8be9fd">int64</span> = <span style="color:#bd93f9">100</span>
+    <span style="color:#50fa7b">reflectType</span>(b) <span style="color:#6272a4">// type:int64
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="type-name和type-kind">type name和type kind</h3>
 <p>在反射中关于类型还划分为两种：<code>类型（Type）</code>和<code>种类（Kind）</code>。因为在Go语言中我们可以使用type关键字构造很多自定义类型，而<code>种类（Kind）</code>就是指底层的类型，但在反射中，当需要区分指针、结构体等大品种的类型时，就会用到<code>种类（Kind）</code>。 举个例子，我们定义了两个指针类型和两个结构体类型，通过反射查看它们的类型和种类。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> main
 
-<span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&#34;fmt&#34;</span>
-    <span class="s">&#34;reflect&#34;</span>
-<span class="p">)</span>
+<span style="color:#ff79c6">import</span> (
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;reflect&#34;</span>
+)
 
-<span class="kd">type</span> <span class="nx">myInt</span> <span class="kt">int64</span>
+<span style="color:#8be9fd;font-style:italic">type</span> myInt <span style="color:#8be9fd">int64</span>
 
-<span class="kd">func</span> <span class="nf">reflectType</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type:%v kind:%v\n&#34;</span><span class="p">,</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Name</span><span class="p">(),</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">())</span>
-<span class="p">}</span>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">reflectType</span>(x <span style="color:#8be9fd;font-style:italic">interface</span>{}) {
+    t <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">TypeOf</span>(x)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type:%v kind:%v\n&#34;</span>, t.<span style="color:#50fa7b">Name</span>(), t.<span style="color:#50fa7b">Kind</span>())
+}
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="o">*</span><span class="kt">float32</span> <span class="c1">// 指针
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">b</span> <span class="nx">myInt</span>    <span class="c1">// 自定义类型
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">c</span> <span class="kt">rune</span>     <span class="c1">// 类型别名
-</span><span class="c1"></span>    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// type: kind:ptr
-</span><span class="c1"></span>    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">// type:myInt kind:int64
-</span><span class="c1"></span>    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="c1">// type:int32 kind:int32
-</span><span class="c1"></span>
-    <span class="kd">type</span> <span class="nx">person</span> <span class="kd">struct</span> <span class="p">{</span>
-        <span class="nx">name</span> <span class="kt">string</span>
-        <span class="nx">age</span>  <span class="kt">int</span>
-    <span class="p">}</span>
-    <span class="kd">type</span> <span class="nx">book</span> <span class="kd">struct</span><span class="p">{</span> <span class="nx">title</span> <span class="kt">string</span> <span class="p">}</span>
-    <span class="kd">var</span> <span class="nx">d</span> <span class="p">=</span> <span class="nx">person</span><span class="p">{</span>
-        <span class="nx">name</span><span class="p">:</span> <span class="s">&#34;沙河小王子&#34;</span><span class="p">,</span>
-        <span class="nx">age</span><span class="p">:</span>  <span class="mi">18</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="kd">var</span> <span class="nx">e</span> <span class="p">=</span> <span class="nx">book</span><span class="p">{</span><span class="nx">title</span><span class="p">:</span> <span class="s">&#34;《跟小王子学Go语言》&#34;</span><span class="p">}</span>
-    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="c1">// type:person kind:struct
-</span><span class="c1"></span>    <span class="nf">reflectType</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// type:book kind:struct
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><p>Go语言的反射中像数组、切片、Map、指针等类型的变量，它们的<code>.Name()</code>都是返回<code>空</code>。</p>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> a <span style="color:#ff79c6">*</span><span style="color:#8be9fd">float32</span> <span style="color:#6272a4">// 指针
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> b myInt    <span style="color:#6272a4">// 自定义类型
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> c <span style="color:#8be9fd">rune</span>     <span style="color:#6272a4">// 类型别名
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">reflectType</span>(a) <span style="color:#6272a4">// type: kind:ptr
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">reflectType</span>(b) <span style="color:#6272a4">// type:myInt kind:int64
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">reflectType</span>(c) <span style="color:#6272a4">// type:int32 kind:int32
+</span><span style="color:#6272a4"></span>
+    <span style="color:#8be9fd;font-style:italic">type</span> person <span style="color:#8be9fd;font-style:italic">struct</span> {
+        name <span style="color:#8be9fd">string</span>
+        age  <span style="color:#8be9fd">int</span>
+    }
+    <span style="color:#8be9fd;font-style:italic">type</span> book <span style="color:#8be9fd;font-style:italic">struct</span>{ title <span style="color:#8be9fd">string</span> }
+    <span style="color:#8be9fd;font-style:italic">var</span> d = person{
+        name: <span style="color:#f1fa8c">&#34;沙河小王子&#34;</span>,
+        age:  <span style="color:#bd93f9">18</span>,
+    }
+    <span style="color:#8be9fd;font-style:italic">var</span> e = book{title: <span style="color:#f1fa8c">&#34;《跟小王子学Go语言》&#34;</span>}
+    <span style="color:#50fa7b">reflectType</span>(d) <span style="color:#6272a4">// type:person kind:struct
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">reflectType</span>(e) <span style="color:#6272a4">// type:book kind:struct
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><p>Go语言的反射中像数组、切片、Map、指针等类型的变量，它们的<code>.Name()</code>都是返回<code>空</code>。</p>
 <p>在<code>reflect</code>包中定义的Kind类型如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Kind</span> <span class="kt">uint</span>
-<span class="kd">const</span> <span class="p">(</span>
-    <span class="nx">Invalid</span> <span class="nx">Kind</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// 非法类型
-</span><span class="c1"></span>    <span class="nx">Bool</span>                 <span class="c1">// 布尔型
-</span><span class="c1"></span>    <span class="nx">Int</span>                  <span class="c1">// 有符号整型
-</span><span class="c1"></span>    <span class="nx">Int8</span>                 <span class="c1">// 有符号8位整型
-</span><span class="c1"></span>    <span class="nx">Int16</span>                <span class="c1">// 有符号16位整型
-</span><span class="c1"></span>    <span class="nx">Int32</span>                <span class="c1">// 有符号32位整型
-</span><span class="c1"></span>    <span class="nx">Int64</span>                <span class="c1">// 有符号64位整型
-</span><span class="c1"></span>    <span class="nx">Uint</span>                 <span class="c1">// 无符号整型
-</span><span class="c1"></span>    <span class="nx">Uint8</span>                <span class="c1">// 无符号8位整型
-</span><span class="c1"></span>    <span class="nx">Uint16</span>               <span class="c1">// 无符号16位整型
-</span><span class="c1"></span>    <span class="nx">Uint32</span>               <span class="c1">// 无符号32位整型
-</span><span class="c1"></span>    <span class="nx">Uint64</span>               <span class="c1">// 无符号64位整型
-</span><span class="c1"></span>    <span class="nx">Uintptr</span>              <span class="c1">// 指针
-</span><span class="c1"></span>    <span class="nx">Float32</span>              <span class="c1">// 单精度浮点数
-</span><span class="c1"></span>    <span class="nx">Float64</span>              <span class="c1">// 双精度浮点数
-</span><span class="c1"></span>    <span class="nx">Complex64</span>            <span class="c1">// 64位复数类型
-</span><span class="c1"></span>    <span class="nx">Complex128</span>           <span class="c1">// 128位复数类型
-</span><span class="c1"></span>    <span class="nx">Array</span>                <span class="c1">// 数组
-</span><span class="c1"></span>    <span class="nx">Chan</span>                 <span class="c1">// 通道
-</span><span class="c1"></span>    <span class="nx">Func</span>                 <span class="c1">// 函数
-</span><span class="c1"></span>    <span class="nx">Interface</span>            <span class="c1">// 接口
-</span><span class="c1"></span>    <span class="nx">Map</span>                  <span class="c1">// 映射
-</span><span class="c1"></span>    <span class="nx">Ptr</span>                  <span class="c1">// 指针
-</span><span class="c1"></span>    <span class="nx">Slice</span>                <span class="c1">// 切片
-</span><span class="c1"></span>    <span class="nx">String</span>               <span class="c1">// 字符串
-</span><span class="c1"></span>    <span class="nx">Struct</span>               <span class="c1">// 结构体
-</span><span class="c1"></span>    <span class="nx">UnsafePointer</span>        <span class="c1">// 底层指针
-</span><span class="c1"></span><span class="p">)</span>
-</code></pre></div><h2 id="32valueof">3.2、ValueOf</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">type</span> Kind <span style="color:#8be9fd">uint</span>
+<span style="color:#8be9fd;font-style:italic">const</span> (
+    Invalid Kind = <span style="color:#ff79c6">iota</span>  <span style="color:#6272a4">// 非法类型
+</span><span style="color:#6272a4"></span>    Bool                 <span style="color:#6272a4">// 布尔型
+</span><span style="color:#6272a4"></span>    Int                  <span style="color:#6272a4">// 有符号整型
+</span><span style="color:#6272a4"></span>    Int8                 <span style="color:#6272a4">// 有符号8位整型
+</span><span style="color:#6272a4"></span>    Int16                <span style="color:#6272a4">// 有符号16位整型
+</span><span style="color:#6272a4"></span>    Int32                <span style="color:#6272a4">// 有符号32位整型
+</span><span style="color:#6272a4"></span>    Int64                <span style="color:#6272a4">// 有符号64位整型
+</span><span style="color:#6272a4"></span>    Uint                 <span style="color:#6272a4">// 无符号整型
+</span><span style="color:#6272a4"></span>    Uint8                <span style="color:#6272a4">// 无符号8位整型
+</span><span style="color:#6272a4"></span>    Uint16               <span style="color:#6272a4">// 无符号16位整型
+</span><span style="color:#6272a4"></span>    Uint32               <span style="color:#6272a4">// 无符号32位整型
+</span><span style="color:#6272a4"></span>    Uint64               <span style="color:#6272a4">// 无符号64位整型
+</span><span style="color:#6272a4"></span>    Uintptr              <span style="color:#6272a4">// 指针
+</span><span style="color:#6272a4"></span>    Float32              <span style="color:#6272a4">// 单精度浮点数
+</span><span style="color:#6272a4"></span>    Float64              <span style="color:#6272a4">// 双精度浮点数
+</span><span style="color:#6272a4"></span>    Complex64            <span style="color:#6272a4">// 64位复数类型
+</span><span style="color:#6272a4"></span>    Complex128           <span style="color:#6272a4">// 128位复数类型
+</span><span style="color:#6272a4"></span>    Array                <span style="color:#6272a4">// 数组
+</span><span style="color:#6272a4"></span>    Chan                 <span style="color:#6272a4">// 通道
+</span><span style="color:#6272a4"></span>    Func                 <span style="color:#6272a4">// 函数
+</span><span style="color:#6272a4"></span>    Interface            <span style="color:#6272a4">// 接口
+</span><span style="color:#6272a4"></span>    Map                  <span style="color:#6272a4">// 映射
+</span><span style="color:#6272a4"></span>    Ptr                  <span style="color:#6272a4">// 指针
+</span><span style="color:#6272a4"></span>    Slice                <span style="color:#6272a4">// 切片
+</span><span style="color:#6272a4"></span>    String               <span style="color:#6272a4">// 字符串
+</span><span style="color:#6272a4"></span>    Struct               <span style="color:#6272a4">// 结构体
+</span><span style="color:#6272a4"></span>    UnsafePointer        <span style="color:#6272a4">// 底层指针
+</span><span style="color:#6272a4"></span>)
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="32valueof">3.2、ValueOf</h2>
 <p><code>reflect.ValueOf()</code>返回的是<code>reflect.Value</code>类型，其中包含了原始值的值信息。<code>reflect.Value</code>与原始值之间可以互相转换。</p>
 <p><code>reflect.Value</code>类型提供的获取原始值的方法如下：</p>
 <table>
@@ -366,85 +466,184 @@
 </tbody>
 </table>
 <h3 id="通过反射获取值">通过反射获取值</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">reflectValue</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="nx">k</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span>
-    <span class="k">switch</span> <span class="nx">k</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Int64</span><span class="p">:</span>
-        <span class="c1">// v.Int()从反射中获取整型的原始值，然后通过int64()强制类型转换
-</span><span class="c1"></span>        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type is int64, value is %d\n&#34;</span><span class="p">,</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">Int</span><span class="p">()))</span>
-    <span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Float32</span><span class="p">:</span>
-        <span class="c1">// v.Float()从反射中获取浮点型的原始值，然后通过float32()强制类型转换
-</span><span class="c1"></span>        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type is float32, value is %f\n&#34;</span><span class="p">,</span> <span class="nb">float32</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">Float</span><span class="p">()))</span>
-    <span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Float64</span><span class="p">:</span>
-        <span class="c1">// v.Float()从反射中获取浮点型的原始值，然后通过float64()强制类型转换
-</span><span class="c1"></span>        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type is float64, value is %f\n&#34;</span><span class="p">,</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">Float</span><span class="p">()))</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="kt">float32</span> <span class="p">=</span> <span class="mf">3.14</span>
-    <span class="kd">var</span> <span class="nx">b</span> <span class="kt">int64</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="nf">reflectValue</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// type is float32, value is 3.140000
-</span><span class="c1"></span>    <span class="nf">reflectValue</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">// type is int64, value is 100
-</span><span class="c1"></span>    <span class="c1">// 将int类型的原始值转换为reflect.Value类型
-</span><span class="c1"></span>    <span class="nx">c</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type c :%T\n&#34;</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="c1">// type c :reflect.Value
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h3 id="通过反射设置变量的值">通过反射设置变量的值</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">reflectValue</span>(x <span style="color:#8be9fd;font-style:italic">interface</span>{}) {
+    v <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">ValueOf</span>(x)
+    k <span style="color:#ff79c6">:=</span> v.<span style="color:#50fa7b">Kind</span>()
+    <span style="color:#ff79c6">switch</span> k {
+    <span style="color:#ff79c6">case</span> reflect.Int64:
+        <span style="color:#6272a4">// v.Int()从反射中获取整型的原始值，然后通过int64()强制类型转换
+</span><span style="color:#6272a4"></span>        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type is int64, value is %d\n&#34;</span>, <span style="color:#8be9fd;font-style:italic">int64</span>(v.<span style="color:#50fa7b">Int</span>()))
+    <span style="color:#ff79c6">case</span> reflect.Float32:
+        <span style="color:#6272a4">// v.Float()从反射中获取浮点型的原始值，然后通过float32()强制类型转换
+</span><span style="color:#6272a4"></span>        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type is float32, value is %f\n&#34;</span>, <span style="color:#8be9fd;font-style:italic">float32</span>(v.<span style="color:#50fa7b">Float</span>()))
+    <span style="color:#ff79c6">case</span> reflect.Float64:
+        <span style="color:#6272a4">// v.Float()从反射中获取浮点型的原始值，然后通过float64()强制类型转换
+</span><span style="color:#6272a4"></span>        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type is float64, value is %f\n&#34;</span>, <span style="color:#8be9fd;font-style:italic">float64</span>(v.<span style="color:#50fa7b">Float</span>()))
+    }
+}
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> a <span style="color:#8be9fd">float32</span> = <span style="color:#bd93f9">3.14</span>
+    <span style="color:#8be9fd;font-style:italic">var</span> b <span style="color:#8be9fd">int64</span> = <span style="color:#bd93f9">100</span>
+    <span style="color:#50fa7b">reflectValue</span>(a) <span style="color:#6272a4">// type is float32, value is 3.140000
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">reflectValue</span>(b) <span style="color:#6272a4">// type is int64, value is 100
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 将int类型的原始值转换为reflect.Value类型
+</span><span style="color:#6272a4"></span>    c <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">ValueOf</span>(<span style="color:#bd93f9">10</span>)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type c :%T\n&#34;</span>, c) <span style="color:#6272a4">// type c :reflect.Value
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="通过反射设置变量的值">通过反射设置变量的值</h3>
 <p>想要在函数中通过反射修改变量的值，需要注意函数参数传递的是值拷贝，必须传递变量地址才能修改变量值。而反射中使用专有的<code>Elem()</code>方法来获取指针对应的值。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ff79c6">package</span> main
 
-<span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&#34;fmt&#34;</span>
-    <span class="s">&#34;reflect&#34;</span>
-<span class="p">)</span>
+<span style="color:#ff79c6">import</span> (
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;reflect&#34;</span>
+)
 
-<span class="kd">func</span> <span class="nf">reflectSetValue1</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="o">==</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Int64</span> <span class="p">{</span>
-        <span class="nx">v</span><span class="p">.</span><span class="nf">SetInt</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="c1">//修改的是副本，reflect包会引发panic
-</span><span class="c1"></span>    <span class="p">}</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="nf">reflectSetValue2</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="c1">// 反射中使用 Elem()方法获取指针对应的值
-</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Elem</span><span class="p">().</span><span class="nf">Kind</span><span class="p">()</span> <span class="o">==</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Int64</span> <span class="p">{</span>
-        <span class="nx">v</span><span class="p">.</span><span class="nf">Elem</span><span class="p">().</span><span class="nf">SetInt</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="kt">int64</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="c1">// reflectSetValue1(a) //panic: reflect: reflect.Value.SetInt using unaddressable value
-</span><span class="c1"></span>    <span class="nf">reflectSetValue2</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">a</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="33isnil和isvalid">3.3、isNil()和isValid()</h2>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">reflectSetValue1</span>(x <span style="color:#8be9fd;font-style:italic">interface</span>{}) {
+    v <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">ValueOf</span>(x)
+    <span style="color:#ff79c6">if</span> v.<span style="color:#50fa7b">Kind</span>() <span style="color:#ff79c6">==</span> reflect.Int64 {
+        v.<span style="color:#50fa7b">SetInt</span>(<span style="color:#bd93f9">200</span>) <span style="color:#6272a4">//修改的是副本，reflect包会引发panic
+</span><span style="color:#6272a4"></span>    }
+}
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">reflectSetValue2</span>(x <span style="color:#8be9fd;font-style:italic">interface</span>{}) {
+    v <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">ValueOf</span>(x)
+    <span style="color:#6272a4">// 反射中使用 Elem()方法获取指针对应的值
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> v.<span style="color:#50fa7b">Elem</span>().<span style="color:#50fa7b">Kind</span>() <span style="color:#ff79c6">==</span> reflect.Int64 {
+        v.<span style="color:#50fa7b">Elem</span>().<span style="color:#50fa7b">SetInt</span>(<span style="color:#bd93f9">200</span>)
+    }
+}
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> a <span style="color:#8be9fd">int64</span> = <span style="color:#bd93f9">100</span>
+    <span style="color:#6272a4">// reflectSetValue1(a) //panic: reflect: reflect.Value.SetInt using unaddressable value
+</span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">reflectSetValue2</span>(<span style="color:#ff79c6">&amp;</span>a)
+    fmt.<span style="color:#50fa7b">Println</span>(a)
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="33isnil和isvalid">3.3、isNil()和isValid()</h2>
 <h3 id="isnil">isNil()</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">v</span> <span class="nx">Value</span><span class="p">)</span> <span class="nf">IsNil</span><span class="p">()</span> <span class="kt">bool</span>
-</code></pre></div><p><code>IsNil()</code>报告v持有的值是否为nil。v持有的值的分类必须是通道、函数、接口、映射、指针、切片之一；否则IsNil函数会导致panic。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> (v Value) <span style="color:#50fa7b">IsNil</span>() <span style="color:#8be9fd">bool</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>IsNil()</code>报告v持有的值是否为nil。v持有的值的分类必须是通道、函数、接口、映射、指针、切片之一；否则IsNil函数会导致panic。</p>
 <h3 id="isvalid">isValid()</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">v</span> <span class="nx">Value</span><span class="p">)</span> <span class="nf">IsValid</span><span class="p">()</span> <span class="kt">bool</span>
-</code></pre></div><p><code>IsValid()</code>返回v是否持有一个值。如果v是Value零值会返回假，此时v除了IsValid、String、Kind之外的方法都会导致panic。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> (v Value) <span style="color:#50fa7b">IsValid</span>() <span style="color:#8be9fd">bool</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>IsValid()</code>返回v是否持有一个值。如果v是Value零值会返回假，此时v除了IsValid、String、Kind之外的方法都会导致panic。</p>
 <h3 id="举个例子">举个例子</h3>
 <p><code>IsNil()</code>常被用于判断指针是否为空；<code>IsValid()</code>常被用于判定返回值是否有效。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// *int类型空指针
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">*</span><span class="kt">int</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;var a *int IsNil:&#34;</span><span class="p">,</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nf">IsNil</span><span class="p">())</span>
-    <span class="c1">// nil值
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nil IsValid:&#34;</span><span class="p">,</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="kc">nil</span><span class="p">).</span><span class="nf">IsValid</span><span class="p">())</span>
-    <span class="c1">// 实例化一个匿名结构体
-</span><span class="c1"></span>    <span class="nx">b</span> <span class="o">:=</span> <span class="kd">struct</span><span class="p">{}{}</span>
-    <span class="c1">// 尝试从结构体中查找&#34;abc&#34;字段
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;不存在的结构体成员:&#34;</span><span class="p">,</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">b</span><span class="p">).</span><span class="nf">FieldByName</span><span class="p">(</span><span class="s">&#34;abc&#34;</span><span class="p">).</span><span class="nf">IsValid</span><span class="p">())</span>
-    <span class="c1">// 尝试从结构体中查找&#34;abc&#34;方法
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;不存在的结构体方法:&#34;</span><span class="p">,</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">b</span><span class="p">).</span><span class="nf">MethodByName</span><span class="p">(</span><span class="s">&#34;abc&#34;</span><span class="p">).</span><span class="nf">IsValid</span><span class="p">())</span>
-    <span class="c1">// map
-</span><span class="c1"></span>    <span class="nx">c</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">{}</span>
-    <span class="c1">// 尝试从map中查找一个不存在的键
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;map中不存在的键：&#34;</span><span class="p">,</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">c</span><span class="p">).</span><span class="nf">MapIndex</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="s">&#34;娜扎&#34;</span><span class="p">)).</span><span class="nf">IsValid</span><span class="p">())</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="4结构体反射">4、结构体反射</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#6272a4">// *int类型空指针
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> a <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span>
+    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;var a *int IsNil:&#34;</span>, reflect.<span style="color:#50fa7b">ValueOf</span>(a).<span style="color:#50fa7b">IsNil</span>())
+    <span style="color:#6272a4">// nil值
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;nil IsValid:&#34;</span>, reflect.<span style="color:#50fa7b">ValueOf</span>(<span style="color:#ff79c6">nil</span>).<span style="color:#50fa7b">IsValid</span>())
+    <span style="color:#6272a4">// 实例化一个匿名结构体
+</span><span style="color:#6272a4"></span>    b <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">struct</span>{}{}
+    <span style="color:#6272a4">// 尝试从结构体中查找&#34;abc&#34;字段
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;不存在的结构体成员:&#34;</span>, reflect.<span style="color:#50fa7b">ValueOf</span>(b).<span style="color:#50fa7b">FieldByName</span>(<span style="color:#f1fa8c">&#34;abc&#34;</span>).<span style="color:#50fa7b">IsValid</span>())
+    <span style="color:#6272a4">// 尝试从结构体中查找&#34;abc&#34;方法
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;不存在的结构体方法:&#34;</span>, reflect.<span style="color:#50fa7b">ValueOf</span>(b).<span style="color:#50fa7b">MethodByName</span>(<span style="color:#f1fa8c">&#34;abc&#34;</span>).<span style="color:#50fa7b">IsValid</span>())
+    <span style="color:#6272a4">// map
+</span><span style="color:#6272a4"></span>    c <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>{}
+    <span style="color:#6272a4">// 尝试从map中查找一个不存在的键
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;map中不存在的键：&#34;</span>, reflect.<span style="color:#50fa7b">ValueOf</span>(c).<span style="color:#50fa7b">MapIndex</span>(reflect.<span style="color:#50fa7b">ValueOf</span>(<span style="color:#f1fa8c">&#34;娜扎&#34;</span>)).<span style="color:#50fa7b">IsValid</span>())
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="4结构体反射">4、结构体反射</h1>
 <h2 id="41与结构体相关的方法">4.1、与结构体相关的方法</h2>
 <p>任意值通过<code>reflect.TypeOf()</code>获得反射对象信息后，如果它的类型是结构体，可以通过反射值对象（<code>reflect.Type</code>）的<code>NumField()</code>和<code>Field()</code>方法获得结构体成员的详细信息。</p>
 <p><code>reflect.Type</code>中与获取结构体成员相关的的方法如下表所示。</p>
@@ -493,72 +692,152 @@
 <h2 id="42structfield类型">4.2、StructField类型</h2>
 <p><code>StructField</code>类型用来描述结构体中的一个字段的信息。</p>
 <p><code>StructField</code>的定义如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">StructField</span> <span class="kd">struct</span> <span class="p">{</span>
-    <span class="c1">// Name是字段的名字。PkgPath是非导出字段的包路径，对导出字段该字段为&#34;&#34;。
-</span><span class="c1"></span>    <span class="c1">// 参见http://golang.org/ref/spec#Uniqueness_of_identifiers
-</span><span class="c1"></span>    <span class="nx">Name</span>    <span class="kt">string</span>
-    <span class="nx">PkgPath</span> <span class="kt">string</span>
-    <span class="nx">Type</span>      <span class="nx">Type</span>      <span class="c1">// 字段的类型
-</span><span class="c1"></span>    <span class="nx">Tag</span>       <span class="nx">StructTag</span> <span class="c1">// 字段的标签
-</span><span class="c1"></span>    <span class="nx">Offset</span>    <span class="kt">uintptr</span>   <span class="c1">// 字段在结构体中的字节偏移量
-</span><span class="c1"></span>    <span class="nx">Index</span>     <span class="p">[]</span><span class="kt">int</span>     <span class="c1">// 用于Type.FieldByIndex时的索引切片
-</span><span class="c1"></span>    <span class="nx">Anonymous</span> <span class="kt">bool</span>      <span class="c1">// 是否匿名字段
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h2 id="43结构体反射示例">4.3、结构体反射示例</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">type</span> StructField <span style="color:#8be9fd;font-style:italic">struct</span> {
+    <span style="color:#6272a4">// Name是字段的名字。PkgPath是非导出字段的包路径，对导出字段该字段为&#34;&#34;。
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 参见http://golang.org/ref/spec#Uniqueness_of_identifiers
+</span><span style="color:#6272a4"></span>    Name    <span style="color:#8be9fd">string</span>
+    PkgPath <span style="color:#8be9fd">string</span>
+    Type      Type      <span style="color:#6272a4">// 字段的类型
+</span><span style="color:#6272a4"></span>    Tag       StructTag <span style="color:#6272a4">// 字段的标签
+</span><span style="color:#6272a4"></span>    Offset    <span style="color:#8be9fd">uintptr</span>   <span style="color:#6272a4">// 字段在结构体中的字节偏移量
+</span><span style="color:#6272a4"></span>    Index     []<span style="color:#8be9fd">int</span>     <span style="color:#6272a4">// 用于Type.FieldByIndex时的索引切片
+</span><span style="color:#6272a4"></span>    Anonymous <span style="color:#8be9fd">bool</span>      <span style="color:#6272a4">// 是否匿名字段
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="43结构体反射示例">4.3、结构体反射示例</h2>
 <p>当我们使用反射得到一个结构体数据之后可以通过索引依次获取其字段信息，也可以通过字段名去获取指定的字段信息。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">student</span> <span class="kd">struct</span> <span class="p">{</span>
-    <span class="nx">Name</span>  <span class="kt">string</span> <span class="s">`json:&#34;name&#34;`</span>
-    <span class="nx">Score</span> <span class="kt">int</span>    <span class="s">`json:&#34;score&#34;`</span>
-<span class="p">}</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">type</span> student <span style="color:#8be9fd;font-style:italic">struct</span> {
+    Name  <span style="color:#8be9fd">string</span> <span style="color:#f1fa8c">`json:&#34;name&#34;`</span>
+    Score <span style="color:#8be9fd">int</span>    <span style="color:#f1fa8c">`json:&#34;score&#34;`</span>
+}
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">stu1</span> <span class="o">:=</span> <span class="nx">student</span><span class="p">{</span>
-        <span class="nx">Name</span><span class="p">:</span>  <span class="s">&#34;小王子&#34;</span><span class="p">,</span>
-        <span class="nx">Score</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
-    <span class="p">}</span>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    stu1 <span style="color:#ff79c6">:=</span> student{
+        Name:  <span style="color:#f1fa8c">&#34;小王子&#34;</span>,
+        Score: <span style="color:#bd93f9">90</span>,
+    }
 
-    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">stu1</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nf">Name</span><span class="p">(),</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">())</span> <span class="c1">// student struct
-</span><span class="c1"></span>    <span class="c1">// 通过for循环遍历结构体的所有字段信息
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">t</span><span class="p">.</span><span class="nf">NumField</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="nx">field</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;name:%s index:%d type:%v json tag:%v\n&#34;</span><span class="p">,</span> <span class="nx">field</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">field</span><span class="p">.</span><span class="nx">Index</span><span class="p">,</span> <span class="nx">field</span><span class="p">.</span><span class="nx">Type</span><span class="p">,</span> <span class="nx">field</span><span class="p">.</span><span class="nx">Tag</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;json&#34;</span><span class="p">))</span>
-    <span class="p">}</span>
+    t <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">TypeOf</span>(stu1)
+    fmt.<span style="color:#50fa7b">Println</span>(t.<span style="color:#50fa7b">Name</span>(), t.<span style="color:#50fa7b">Kind</span>()) <span style="color:#6272a4">// student struct
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 通过for循环遍历结构体的所有字段信息
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; t.<span style="color:#50fa7b">NumField</span>(); i<span style="color:#ff79c6">++</span> {
+        field <span style="color:#ff79c6">:=</span> t.<span style="color:#50fa7b">Field</span>(i)
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;name:%s index:%d type:%v json tag:%v\n&#34;</span>, field.Name, field.Index, field.Type, field.Tag.<span style="color:#50fa7b">Get</span>(<span style="color:#f1fa8c">&#34;json&#34;</span>))
+    }
 
-    <span class="c1">// 通过字段名获取指定结构体字段信息
-</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">scoreField</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nf">FieldByName</span><span class="p">(</span><span class="s">&#34;Score&#34;</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;name:%s index:%d type:%v json tag:%v\n&#34;</span><span class="p">,</span> <span class="nx">scoreField</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">scoreField</span><span class="p">.</span><span class="nx">Index</span><span class="p">,</span> <span class="nx">scoreField</span><span class="p">.</span><span class="nx">Type</span><span class="p">,</span> <span class="nx">scoreField</span><span class="p">.</span><span class="nx">Tag</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;json&#34;</span><span class="p">))</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>接下来编写一个函数<code>printMethod(s interface{})</code>来遍历打印s包含的方法。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 给student添加两个方法 Study和Sleep(注意首字母大写)
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">student</span><span class="p">)</span> <span class="nf">Study</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-    <span class="nx">msg</span> <span class="o">:=</span> <span class="s">&#34;好好学习，天天向上。&#34;</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">msg</span>
-<span class="p">}</span>
+    <span style="color:#6272a4">// 通过字段名获取指定结构体字段信息
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> scoreField, ok <span style="color:#ff79c6">:=</span> t.<span style="color:#50fa7b">FieldByName</span>(<span style="color:#f1fa8c">&#34;Score&#34;</span>); ok {
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;name:%s index:%d type:%v json tag:%v\n&#34;</span>, scoreField.Name, scoreField.Index, scoreField.Type, scoreField.Tag.<span style="color:#50fa7b">Get</span>(<span style="color:#f1fa8c">&#34;json&#34;</span>))
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>接下来编写一个函数<code>printMethod(s interface{})</code>来遍历打印s包含的方法。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#6272a4">// 给student添加两个方法 Study和Sleep(注意首字母大写)
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (s student) <span style="color:#50fa7b">Study</span>() <span style="color:#8be9fd">string</span> {
+    msg <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;好好学习，天天向上。&#34;</span>
+    fmt.<span style="color:#50fa7b">Println</span>(msg)
+    <span style="color:#ff79c6">return</span> msg
+}
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">student</span><span class="p">)</span> <span class="nf">Sleep</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-    <span class="nx">msg</span> <span class="o">:=</span> <span class="s">&#34;好好睡觉，快快长大。&#34;</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">msg</span>
-<span class="p">}</span>
+<span style="color:#8be9fd;font-style:italic">func</span> (s student) <span style="color:#50fa7b">Sleep</span>() <span style="color:#8be9fd">string</span> {
+    msg <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;好好睡觉，快快长大。&#34;</span>
+    fmt.<span style="color:#50fa7b">Println</span>(msg)
+    <span style="color:#ff79c6">return</span> msg
+}
 
-<span class="kd">func</span> <span class="nf">printMethod</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">printMethod</span>(x <span style="color:#8be9fd;font-style:italic">interface</span>{}) {
+    t <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">TypeOf</span>(x)
+    v <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">ValueOf</span>(x)
 
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nf">NumMethod</span><span class="p">())</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">v</span><span class="p">.</span><span class="nf">NumMethod</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="nx">methodType</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Method</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nf">Type</span><span class="p">()</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;method name:%s\n&#34;</span><span class="p">,</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Method</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">)</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;method:%s\n&#34;</span><span class="p">,</span> <span class="nx">methodType</span><span class="p">)</span>
-        <span class="c1">// 通过反射调用方法传递的参数必须是 []reflect.Value 类型
-</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">args</span> <span class="p">=</span> <span class="p">[]</span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">{}</span>
-        <span class="nx">v</span><span class="p">.</span><span class="nf">Method</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nf">Call</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="5反射是把双刃剑">5、反射是把双刃剑</h1>
+    fmt.<span style="color:#50fa7b">Println</span>(t.<span style="color:#50fa7b">NumMethod</span>())
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; v.<span style="color:#50fa7b">NumMethod</span>(); i<span style="color:#ff79c6">++</span> {
+        methodType <span style="color:#ff79c6">:=</span> v.<span style="color:#50fa7b">Method</span>(i).<span style="color:#50fa7b">Type</span>()
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;method name:%s\n&#34;</span>, t.<span style="color:#50fa7b">Method</span>(i).Name)
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;method:%s\n&#34;</span>, methodType)
+        <span style="color:#6272a4">// 通过反射调用方法传递的参数必须是 []reflect.Value 类型
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">var</span> args = []reflect.Value{}
+        v.<span style="color:#50fa7b">Method</span>(i).<span style="color:#50fa7b">Call</span>(args)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="5反射是把双刃剑">5、反射是把双刃剑</h1>
 <p>反射是一个强大并富有表现力的工具，能让我们写出更灵活的代码。但是反射不应该被滥用，原因有以下三个。</p>
 <ol>
 <li>基于反射的代码是极其脆弱的，反射中的类型错误会在真正运行的时候才会引发panic，那很可能是在代码写完的很长时间之后。</li>

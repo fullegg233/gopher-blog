@@ -41,10 +41,8 @@ theme = "maupassant"
 
 [markup]
   [markup.highlight]
-    codeFences = true
-    noClasses = false
-    tabWidth = 2
-    lineNos = false
+    style = "dracula"
+    lineNos = true
   [markup.tableOfContents]
-    ordered = false
     startLevel = 1
+    ordered = false

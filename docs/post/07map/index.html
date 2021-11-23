@@ -201,166 +201,379 @@
         <div class="post-content">
             <h1 id="1map定义">1、map定义</h1>
 <p>Go语言中 <code>map</code>的定义语法如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">map</span><span class="p">[</span><span class="nx">KeyType</span><span class="p">]</span><span class="nx">ValueType</span>
-</code></pre></div><p>其中，</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">map</span>[KeyType]ValueType
+</code></pre></td></tr></table>
+</div>
+</div><p>其中，</p>
 <ul>
 <li>KeyType:表示键的类型。</li>
 <li>ValueType:表示键对应的值的类型。</li>
 </ul>
 <p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="nx">KeyType</span><span class="p">]</span><span class="nx">ValueType</span><span class="p">,</span> <span class="p">[</span><span class="nx">cap</span><span class="p">])</span>
-</code></pre></div><p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[KeyType]ValueType, [cap])
+</code></pre></td></tr></table>
+</div>
+</div><p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
 <h1 id="2map基本使用">2、map基本使用</h1>
 <p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">scoreMap</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;张三&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">90</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;小明&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scoreMap</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;小明&#34;</span><span class="p">])</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type of a:%T\n&#34;</span><span class="p">,</span> <span class="nx">scoreMap</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>输出：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">map<span class="o">[</span>小明:100 张三:90<span class="o">]</span>
-<span class="m">100</span>
-<span class="nb">type</span> of a:map<span class="o">[</span>string<span class="o">]</span>int
-</code></pre></div><p>map也支持在声明的时候填充元素，例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">userInfo</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-        <span class="s">&#34;username&#34;</span><span class="p">:</span> <span class="s">&#34;沙河小王子&#34;</span><span class="p">,</span>
-        <span class="s">&#34;password&#34;</span><span class="p">:</span> <span class="s">&#34;123456&#34;</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">userInfo</span><span class="p">)</span> <span class="c1">//
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h1 id="3判断某个键是否存在">3、判断某个键是否存在</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    scoreMap <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>, <span style="color:#bd93f9">8</span>)
+    scoreMap[<span style="color:#f1fa8c">&#34;张三&#34;</span>] = <span style="color:#bd93f9">90</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;小明&#34;</span>] = <span style="color:#bd93f9">100</span>
+    fmt.<span style="color:#50fa7b">Println</span>(scoreMap)
+    fmt.<span style="color:#50fa7b">Println</span>(scoreMap[<span style="color:#f1fa8c">&#34;小明&#34;</span>])
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;type of a:%T\n&#34;</span>, scoreMap)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">map<span style="color:#ff79c6">[</span>小明:100 张三:90<span style="color:#ff79c6">]</span>
+<span style="color:#bd93f9">100</span>
+<span style="color:#8be9fd;font-style:italic">type</span> of a:map<span style="color:#ff79c6">[</span>string<span style="color:#ff79c6">]</span>int
+</code></pre></td></tr></table>
+</div>
+</div><p>map也支持在声明的时候填充元素，例如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    userInfo <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span>{
+        <span style="color:#f1fa8c">&#34;username&#34;</span>: <span style="color:#f1fa8c">&#34;沙河小王子&#34;</span>,
+        <span style="color:#f1fa8c">&#34;password&#34;</span>: <span style="color:#f1fa8c">&#34;123456&#34;</span>,
+    }
+    fmt.<span style="color:#50fa7b">Println</span>(userInfo) <span style="color:#6272a4">//
+</span><span style="color:#6272a4"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="3判断某个键是否存在">3、判断某个键是否存在</h1>
 <p>Go语言中有个判断map中键是否存在的特殊写法，格式如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-</code></pre></div><p>举个例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">scoreMap</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;张三&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">90</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;小明&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="c1">// 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值
-</span><span class="c1"></span>    <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;张三&#34;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;查无此人&#34;</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="4map的遍历">4、map的遍历</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">value, ok <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">map</span>[key]
+</code></pre></td></tr></table>
+</div>
+</div><p>举个例子：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    scoreMap <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>)
+    scoreMap[<span style="color:#f1fa8c">&#34;张三&#34;</span>] = <span style="color:#bd93f9">90</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;小明&#34;</span>] = <span style="color:#bd93f9">100</span>
+    <span style="color:#6272a4">// 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值
+</span><span style="color:#6272a4"></span>    v, ok <span style="color:#ff79c6">:=</span> scoreMap[<span style="color:#f1fa8c">&#34;张三&#34;</span>]
+    <span style="color:#ff79c6">if</span> ok {
+        fmt.<span style="color:#50fa7b">Println</span>(v)
+    } <span style="color:#ff79c6">else</span> {
+        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;查无此人&#34;</span>)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="4map的遍历">4、map的遍历</h1>
 <p>Go语言中使用<code>for range</code>遍历map。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">scoreMap</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;张三&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">90</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;小明&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;娜扎&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">60</span>
-    <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">scoreMap</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>但我们只想遍历key的时候，可以按下面的写法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">scoreMap</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;张三&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">90</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;小明&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;娜扎&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">60</span>
-    <span class="k">for</span> <span class="nx">k</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">scoreMap</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p><strong>注意：</strong> 遍历map时的元素顺序与添加键值对的顺序无关。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    scoreMap <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>)
+    scoreMap[<span style="color:#f1fa8c">&#34;张三&#34;</span>] = <span style="color:#bd93f9">90</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;小明&#34;</span>] = <span style="color:#bd93f9">100</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;娜扎&#34;</span>] = <span style="color:#bd93f9">60</span>
+    <span style="color:#ff79c6">for</span> k, v <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> scoreMap {
+        fmt.<span style="color:#50fa7b">Println</span>(k, v)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>但我们只想遍历key的时候，可以按下面的写法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    scoreMap <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>)
+    scoreMap[<span style="color:#f1fa8c">&#34;张三&#34;</span>] = <span style="color:#bd93f9">90</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;小明&#34;</span>] = <span style="color:#bd93f9">100</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;娜扎&#34;</span>] = <span style="color:#bd93f9">60</span>
+    <span style="color:#ff79c6">for</span> k <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> scoreMap {
+        fmt.<span style="color:#50fa7b">Println</span>(k)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意：</strong> 遍历map时的元素顺序与添加键值对的顺序无关。</p>
 <h1 id="5使用delete函数删除键值对">5、使用delete()函数删除键值对</h1>
 <p>使用<code>delete()</code>内建函数从map中删除一组键值对，<code>delete()</code>函数的格式如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nb">delete</span><span class="p">(</span><span class="kd">map</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
-</code></pre></div><p>其中，</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">delete</span>(<span style="color:#8be9fd;font-style:italic">map</span>, key)
+</code></pre></td></tr></table>
+</div>
+</div><p>其中，</p>
 <ul>
 <li>map:表示要删除键值对的map</li>
 <li>key:表示要删除的键值对的键</li>
 </ul>
 <p>示例代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="nx">scoreMap</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;张三&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">90</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;小明&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="nx">scoreMap</span><span class="p">[</span><span class="s">&#34;娜扎&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">60</span>
-    <span class="nb">delete</span><span class="p">(</span><span class="nx">scoreMap</span><span class="p">,</span> <span class="s">&#34;小明&#34;</span><span class="p">)</span><span class="c1">//将小明:100从map中删除
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">k</span><span class="p">,</span><span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">scoreMap</span><span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="6按照指定顺序遍历map">6、按照指定顺序遍历map</h1>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">rand</span><span class="p">.</span><span class="nf">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">UnixNano</span><span class="p">())</span> <span class="c1">//初始化随机数种子
-</span><span class="c1"></span>
-    <span class="kd">var</span> <span class="nx">scoreMap</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    scoreMap <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>)
+    scoreMap[<span style="color:#f1fa8c">&#34;张三&#34;</span>] = <span style="color:#bd93f9">90</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;小明&#34;</span>] = <span style="color:#bd93f9">100</span>
+    scoreMap[<span style="color:#f1fa8c">&#34;娜扎&#34;</span>] = <span style="color:#bd93f9">60</span>
+    <span style="color:#8be9fd;font-style:italic">delete</span>(scoreMap, <span style="color:#f1fa8c">&#34;小明&#34;</span>)<span style="color:#6272a4">//将小明:100从map中删除
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> k,v <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> scoreMap{
+        fmt.<span style="color:#50fa7b">Println</span>(k, v)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="6按照指定顺序遍历map">6、按照指定顺序遍历map</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    rand.<span style="color:#50fa7b">Seed</span>(time.<span style="color:#50fa7b">Now</span>().<span style="color:#50fa7b">UnixNano</span>()) <span style="color:#6272a4">//初始化随机数种子
+</span><span style="color:#6272a4"></span>
+    <span style="color:#8be9fd;font-style:italic">var</span> scoreMap = <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>, <span style="color:#bd93f9">200</span>)
 
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="nx">key</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;stu%02d&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">//生成stu开头的字符串
-</span><span class="c1"></span>        <span class="nx">value</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>          <span class="c1">//生成0~99的随机整数
-</span><span class="c1"></span>        <span class="nx">scoreMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">value</span>
-    <span class="p">}</span>
-    <span class="c1">//取出map中的所有key存入切片keys
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">keys</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="k">for</span> <span class="nx">key</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">scoreMap</span> <span class="p">{</span>
-        <span class="nx">keys</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="c1">//对切片进行排序
-</span><span class="c1"></span>    <span class="nx">sort</span><span class="p">.</span><span class="nf">Strings</span><span class="p">(</span><span class="nx">keys</span><span class="p">)</span>
-    <span class="c1">//按照排序后的key遍历map
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">key</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">keys</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">scoreMap</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="7元素为map类型的切片">7、元素为map类型的切片</h1>
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#bd93f9">100</span>; i<span style="color:#ff79c6">++</span> {
+        key <span style="color:#ff79c6">:=</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;stu%02d&#34;</span>, i) <span style="color:#6272a4">//生成stu开头的字符串
+</span><span style="color:#6272a4"></span>        value <span style="color:#ff79c6">:=</span> rand.<span style="color:#50fa7b">Intn</span>(<span style="color:#bd93f9">100</span>)          <span style="color:#6272a4">//生成0~99的随机整数
+</span><span style="color:#6272a4"></span>        scoreMap[key] = value
+    }
+    <span style="color:#6272a4">//取出map中的所有key存入切片keys
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">var</span> keys = <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">string</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">200</span>)
+    <span style="color:#ff79c6">for</span> key <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> scoreMap {
+        keys = <span style="color:#8be9fd;font-style:italic">append</span>(keys, key)
+    }
+    <span style="color:#6272a4">//对切片进行排序
+</span><span style="color:#6272a4"></span>    sort.<span style="color:#50fa7b">Strings</span>(keys)
+    <span style="color:#6272a4">//按照排序后的key遍历map
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> _, key <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> keys {
+        fmt.<span style="color:#50fa7b">Println</span>(key, scoreMap[key])
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="7元素为map类型的切片">7、元素为map类型的切片</h1>
 <p>下面的代码演示了切片中的元素为map类型时的操作：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">mapSlice</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">mapSlice</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;index:%d value:%v\n&#34;</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;after init&#34;</span><span class="p">)</span>
-    <span class="c1">// 对切片中的map元素进行初始化
-</span><span class="c1"></span>    <span class="nx">mapSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-    <span class="nx">mapSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#34;name&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;小王子&#34;</span>
-    <span class="nx">mapSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#34;password&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;123456&#34;</span>
-    <span class="nx">mapSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#34;address&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;沙河&#34;</span>
-    <span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">mapSlice</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;index:%d value:%v\n&#34;</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="8值为切片类型的map">8、值为切片类型的map</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> mapSlice = <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span>, <span style="color:#bd93f9">3</span>)
+    <span style="color:#ff79c6">for</span> index, value <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> mapSlice {
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;index:%d value:%v\n&#34;</span>, index, value)
+    }
+    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;after init&#34;</span>)
+    <span style="color:#6272a4">// 对切片中的map元素进行初始化
+</span><span style="color:#6272a4"></span>    mapSlice[<span style="color:#bd93f9">0</span>] = <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span>, <span style="color:#bd93f9">10</span>)
+    mapSlice[<span style="color:#bd93f9">0</span>][<span style="color:#f1fa8c">&#34;name&#34;</span>] = <span style="color:#f1fa8c">&#34;小王子&#34;</span>
+    mapSlice[<span style="color:#bd93f9">0</span>][<span style="color:#f1fa8c">&#34;password&#34;</span>] = <span style="color:#f1fa8c">&#34;123456&#34;</span>
+    mapSlice[<span style="color:#bd93f9">0</span>][<span style="color:#f1fa8c">&#34;address&#34;</span>] = <span style="color:#f1fa8c">&#34;沙河&#34;</span>
+    <span style="color:#ff79c6">for</span> index, value <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> mapSlice {
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;index:%d value:%v\n&#34;</span>, index, value)
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="8值为切片类型的map">8、值为切片类型的map</h1>
 <p>下面的代码演示了map中值为切片类型的操作：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">sliceMap</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">sliceMap</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;after init&#34;</span><span class="p">)</span>
-    <span class="nx">key</span> <span class="o">:=</span> <span class="s">&#34;中国&#34;</span>
-    <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">sliceMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-    <span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-        <span class="nx">value</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="nx">value</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="s">&#34;北京&#34;</span><span class="p">,</span> <span class="s">&#34;上海&#34;</span><span class="p">)</span>
-    <span class="nx">sliceMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">value</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">sliceMap</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><h1 id="9练习题">9、练习题</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">var</span> sliceMap = <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>][]<span style="color:#8be9fd">string</span>, <span style="color:#bd93f9">3</span>)
+    fmt.<span style="color:#50fa7b">Println</span>(sliceMap)
+    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;after init&#34;</span>)
+    key <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;中国&#34;</span>
+    value, ok <span style="color:#ff79c6">:=</span> sliceMap[key]
+    <span style="color:#ff79c6">if</span> !ok {
+        value = <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">string</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">2</span>)
+    }
+    value = <span style="color:#8be9fd;font-style:italic">append</span>(value, <span style="color:#f1fa8c">&#34;北京&#34;</span>, <span style="color:#f1fa8c">&#34;上海&#34;</span>)
+    sliceMap[key] = value
+    fmt.<span style="color:#50fa7b">Println</span>(sliceMap)
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="9练习题">9、练习题</h1>
 <ol>
 <li>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。</li>
 <li>观察下面代码，写出最终的打印结果。</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">type</span> <span class="nx">Map</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="kt">int</span>
-    <span class="nx">m</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">Map</span><span class="p">)</span>
-    <span class="nx">s</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
-    <span class="nx">s</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%+v\n&#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span>
-    <span class="nx">m</span><span class="p">[</span><span class="s">&#34;q1mi&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="nx">s</span>
-    <span class="nx">s</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="nx">s</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">...</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%+v\n&#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%+v\n&#34;</span><span class="p">,</span> <span class="nx">m</span><span class="p">[</span><span class="s">&#34;q1mi&#34;</span><span class="p">])</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    <span style="color:#8be9fd;font-style:italic">type</span> Map <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>][]<span style="color:#8be9fd">int</span>
+    m <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(Map)
+    s <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd">int</span>{<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>}
+    s = <span style="color:#8be9fd;font-style:italic">append</span>(s, <span style="color:#bd93f9">3</span>)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%+v\n&#34;</span>, s)
+    m[<span style="color:#f1fa8c">&#34;q1mi&#34;</span>] = s
+    s = <span style="color:#8be9fd;font-style:italic">append</span>(s[:<span style="color:#bd93f9">1</span>], s[<span style="color:#bd93f9">2</span>:]<span style="color:#ff79c6">...</span>)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%+v\n&#34;</span>, s)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%+v\n&#34;</span>, m[<span style="color:#f1fa8c">&#34;q1mi&#34;</span>])
+}
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
